@@ -84,8 +84,8 @@ void generateSDF(Bitmap<float> &output, const Shape &shape, double range, const 
             for (int x = 0; x < w; ++x) {
                 double dummy;
                 Point2 p = Vector2(x+.5, y+.5)/scale-translate;
-                double negDist = -SignedDistance::INFINITE.distance;
-                double posDist = SignedDistance::INFINITE.distance;
+                double negDist = -SignedDistance::Infinite.distance;
+                double posDist = SignedDistance::Infinite.distance;
                 int winding = 0;
 
                 std::vector<Contour>::const_iterator contour = shape.contours.begin();
@@ -103,7 +103,7 @@ void generateSDF(Bitmap<float> &output, const Shape &shape, double range, const 
                         negDist = minDistance.distance;
                 }
 
-                double sd = SignedDistance::INFINITE.distance;
+                double sd = SignedDistance::Infinite.distance;
                 if (posDist >= 0 && fabs(posDist) <= fabs(negDist)) {
                     sd = posDist;
                     winding = 1;
@@ -148,9 +148,9 @@ void generatePseudoSDF(Bitmap<float> &output, const Shape &shape, double range, 
             int row = shape.inverseYAxis ? h-y-1 : y;
             for (int x = 0; x < w; ++x) {
                 Point2 p = Vector2(x+.5, y+.5)/scale-translate;
-                double sd = SignedDistance::INFINITE.distance;
-                double negDist = -SignedDistance::INFINITE.distance;
-                double posDist = SignedDistance::INFINITE.distance;
+                double sd = SignedDistance::Infinite.distance;
+                double negDist = -SignedDistance::Infinite.distance;
+                double posDist = SignedDistance::Infinite.distance;
                 int winding = 0;
 
                 std::vector<Contour>::const_iterator contour = shape.contours.begin();
@@ -180,7 +180,7 @@ void generatePseudoSDF(Bitmap<float> &output, const Shape &shape, double range, 
                         negDist = minDistance.distance;
                 }
 
-                double psd = SignedDistance::INFINITE.distance;
+                double psd = SignedDistance::Infinite.distance;
                 if (posDist >= 0 && fabs(posDist) <= fabs(negDist)) {
                     psd = posDist;
                     winding = 1;
@@ -233,9 +233,9 @@ void generateMSDF(Bitmap<FloatRGB> &output, const Shape &shape, double range, co
                 } sr, sg, sb;
                 sr.nearEdge = sg.nearEdge = sb.nearEdge = NULL;
                 sr.nearParam = sg.nearParam = sb.nearParam = 0;
-                double d = fabs(SignedDistance::INFINITE.distance);
-                double negDist = -SignedDistance::INFINITE.distance;
-                double posDist = SignedDistance::INFINITE.distance;
+                double d = fabs(SignedDistance::Infinite.distance);
+                double negDist = -SignedDistance::Infinite.distance;
+                double posDist = SignedDistance::Infinite.distance;
                 int winding = 0;
 
                 std::vector<Contour>::const_iterator contour = shape.contours.begin();
@@ -299,15 +299,15 @@ void generateMSDF(Bitmap<FloatRGB> &output, const Shape &shape, double range, co
                     (*sb.nearEdge)->distanceToPseudoDistance(sb.minDistance, p, sb.nearParam);
 
                 MultiDistance msd;
-                msd.r = msd.g = msd.b = msd.med = SignedDistance::INFINITE.distance;
+                msd.r = msd.g = msd.b = msd.med = SignedDistance::Infinite.distance;
                 if (posDist >= 0 && fabs(posDist) <= fabs(negDist)) {
-                    msd.med = SignedDistance::INFINITE.distance;
+                    msd.med = SignedDistance::Infinite.distance;
                     winding = 1;
                     for (int i = 0; i < contourCount; ++i)
                         if (windings[i] > 0 && contourSD[i].med > msd.med && fabs(contourSD[i].med) < fabs(negDist))
                             msd = contourSD[i];
                 } else if (negDist <= 0 && fabs(negDist) <= fabs(posDist)) {
-                    msd.med = -SignedDistance::INFINITE.distance;
+                    msd.med = -SignedDistance::Infinite.distance;
                     winding = -1;
                     for (int i = 0; i < contourCount; ++i)
                         if (windings[i] < 0 && contourSD[i].med < msd.med && fabs(contourSD[i].med) < fabs(posDist))
@@ -440,3 +440,4 @@ void generateMSDF_legacy(Bitmap<FloatRGB> &output, const Shape &shape, double ra
 }
 
 }
+
